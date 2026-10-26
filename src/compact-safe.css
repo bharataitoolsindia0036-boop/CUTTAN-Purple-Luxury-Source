@@ -1,0 +1,244 @@
+/* CUTTAN compact mobile editor */
+.app-shell {
+  width: 100%;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.editor-page {
+  padding: 10px 12px 18px !important;
+}
+
+.editor-heading {
+  margin: 0 1px 8px !important;
+}
+
+.editor-heading h2 {
+  font-size: 18px !important;
+  margin-top: 2px !important;
+}
+
+.editor-heading .eyebrow,
+.editor-heading .muted {
+  font-size: 9px !important;
+  margin-top: 2px !important;
+}
+
+.preview-frame {
+  min-height: 0 !important;
+  height: min(31dvh, 230px) !important;
+  max-height: 230px !important;
+  aspect-ratio: auto !important;
+  border-radius: 13px !important;
+}
+
+.preview-frame.ratio-16-9,
+.preview-frame.ratio-1-1,
+.preview-frame.ratio-4-5 {
+  height: min(31dvh, 230px) !important;
+  max-height: 230px !important;
+}
+
+.transport-row {
+  margin: 5px 1px 0 !important;
+  gap: 5px !important;
+  font-size: 9px !important;
+}
+
+.mini-button {
+  min-height: 30px !important;
+  padding: 5px 7px !important;
+  font-size: 9px !important;
+}
+
+.controls-panel {
+  margin-top: 8px !important;
+  padding: 10px !important;
+  border-radius: 13px !important;
+}
+
+.controls-panel .section-head {
+  margin: 0 0 5px !important;
+}
+
+.controls-panel .section-head h3 {
+  font-size: 15px !important;
+}
+
+.controls-panel .eyebrow,
+.controls-panel .live-tag {
+  font-size: 8px !important;
+}
+
+.controls-panel .control-block {
+  margin-top: 8px !important;
+  margin-bottom: 0 !important;
+}
+
+.controls-panel .control-label {
+  font-size: 10px !important;
+  line-height: 1.25 !important;
+  margin-bottom: 3px !important;
+}
+
+.controls-panel .filter-scroll {
+  gap: 5px !important;
+  padding: 0 0 4px !important;
+}
+
+.controls-panel .filter-chip {
+  min-height: 31px !important;
+  padding: 6px 8px !important;
+  font-size: 9px !important;
+  gap: 4px !important;
+}
+
+.controls-panel .filter-dot {
+  width: 7px !important;
+  height: 7px !important;
+}
+
+.controls-panel .two-controls {
+  gap: 8px !important;
+}
+
+.controls-panel .chips {
+  gap: 4px !important;
+}
+
+.controls-panel .chip {
+  min-height: 29px !important;
+  padding: 5px 7px !important;
+  font-size: 9px !important;
+}
+
+.controls-panel input[type="range"] {
+  height: 20px !important;
+  margin: 0 !important;
+}
+
+.controls-panel .space-top {
+  margin-top: 5px !important;
+}
+
+.controls-panel .helper-text {
+  font-size: 9px !important;
+  line-height: 1.3 !important;
+  margin-top: 3px !important;
+}
+
+.controls-panel select {
+  min-height: 33px !important;
+  padding: 6px !important;
+  font-size: 10px !important;
+}
+
+.controls-panel .audio-control {
+  padding-top: 7px !important;
+  gap: 5px !important;
+}
+
+.controls-panel .outline-button,
+.controls-panel .remove-audio {
+  min-height: 31px !important;
+  padding: 6px 8px !important;
+  font-size: 9px !important;
+}
+
+.render-panel {
+  margin-top: 8px !important;
+  padding: 11px !important;
+  border-radius: 13px !important;
+}
+
+.render-heading h3 {
+  font-size: 15px !important;
+}
+
+.render-icon {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.export-button {
+  min-height: 42px !important;
+  margin-top: 7px !important;
+  font-size: 12px !important;
+}
+
+.bottom-nav {
+  padding-top: 5px !important;
+  padding-bottom: calc(5px + env(safe-area-inset-bottom)) !important;
+}
+
+.nav-item,
+.nav-create {
+  min-height: 43px !important;
+  gap: 2px !important;
+  font-size: 8px !important;
+}
+
+.nav-item svg {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+@media (max-width: 380px) {
+  .editor-page {
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+  }
+
+  .controls-panel {
+    padding: 8px !important;
+  }
+
+  .controls-panel .two-controls {
+    gap: 6px !important;
+  }
+}
+
+/* CUTTAN editor final compact header adjustments */
+.editor-page {
+  padding-top: 4px !important;
+}
+
+.editor-heading {
+  min-height: 0 !important;
+  margin: 0 1px 5px !important;
+  padding: 0 !important;
+}
+
+.editor-heading h2 {
+  margin: 0 !important;
+  font-size: 16px !important;
+  line-height: 1.2 !important;
+}
+
+.controls-panel .control-toolbar {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  min-height: 25px !important;
+  margin: 0 0 5px !important;
+  padding: 0 !important;
+}
+
+.controls-panel .live-toolbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 7px !important;
+}
+
+.controls-panel .save-live-button {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 30px !important;
+  min-width: 30px !important;
+  height: 28px !important;
+  min-height: 28px !important;
+  padding: 4px !important;
+}
+

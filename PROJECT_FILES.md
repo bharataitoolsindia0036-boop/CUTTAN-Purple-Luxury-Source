@@ -1,0 +1,25 @@
+# Project file map
+
+- `index.html` — HTML entry, viewport/theme metadata, manifest and icon links.
+- `package.json` — dependency versions and dev/build/typecheck/Android scripts.
+- `vite.config.ts` — Vite + React build configuration.
+- `tsconfig.json`, `tsconfig.app.json` — TypeScript project settings.
+- `capacitor.config.ts` — Android application ID, name and web output folder.
+- `src/main.tsx` — React entry point, CSS import and service-worker registration.
+- `src/App.tsx` — CUTTAN UI, local video preview, editing controls, project settings and FFmpeg export flow.
+- `src/styles.css` — mobile-first Purple Luxury theme.
+- `src/registerSW.ts` — production service-worker registration.
+- `src/vite-env.d.ts` — Vite type definitions.
+- `public/manifest.webmanifest` — PWA name, launch mode, theme and icon declarations.
+- `public/sw.js` — shell/assets cache; excludes user media and FFmpeg runtime from cache-first handling.
+- `public/offline.html` — offline fallback page.
+- `public/icons/` — original CUTTAN SVG and PNG icons.
+- `public/privacy.html`, `PRIVACY_POLICY.md` — privacy-policy draft; review and publish at a stable URL before store release.
+- `scripts/copy-ffmpeg.mjs` — copies the FFmpeg WebAssembly runtime from installed npm package into `public/ffmpeg/` before dev/build.
+- `README.md` — setup, implemented scope and limitations.
+- `AUDIT_REPORT.md` — current audit/known limitations.
+- `LICENSES.md`, `ASSET_REGISTER.md`, `LICENSE` — source/third-party licensing and asset notes.
+- `SECURITY.md` — data handling and security notes.
+- `INDUS_RELEASE_CHECKLIST.md`, `STORE_LISTING_DRAFT.md` — release preparation notes, not an approval certificate.
+- `ANDROID_BUILD.md` — generate native Android platform and signed release build instructions.
+- `.gitignore`, `.npmrc`, `.env.example` — project hygiene and environment template.

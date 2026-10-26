@@ -1,0 +1,11 @@
+node_modules/
+dist/
+public/ffmpeg/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+android/.gradle/
+android/app/build/

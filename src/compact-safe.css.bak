@@ -1,0 +1,39 @@
+/* ✅ ONLY CLIP CONTROLS PANEL - SLOT BUTTON APADIYE */
+.clip-controls-panel {
+  padding: 8px 10px !important;
+  gap: 6px !important;
+}
+
+/* Trim section size kami */
+.clip-controls-panel div:has(> input[type="range"]) {
+  margin: 4px 0 !important;
+  padding: 2px 0 !important;
+}
+
+/* Label font kami - button thoda vendaam */
+.clip-controls-panel label,
+.clip-controls-panel span.text-xs,
+.clip-controls-panel span.text-sm {
+  font-size: 10px !important;
+  line-height: 12px !important;
+}
+
+/* Slider height kami */
+.clip-controls-panel input[type="range"] {
+  height: 3px !important;
+  margin: 2px 0 !important;
+}
+
+/* Aspect ratio row gap kami */
+.clip-controls-panel .flex.gap-2,
+.clip-controls-panel .grid {
+  gap: 4px !important;
+}
+
+/* BUTTONS - TOUCH PANNA VENDAAM - APADIYE IRUKKATTUM */
+.clip-controls-panel button {
+  /* apadiye - size maatha vendaam */
+  transform: none !important;
+}
+
+/* LIVE badge, Purple Dream text mattum apadiye */

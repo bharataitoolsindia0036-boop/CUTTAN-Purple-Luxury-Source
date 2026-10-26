@@ -1,0 +1,221 @@
+import { useEffect, useRef, useState } from 'react';
+import { FFmpeg } from '@ffmpeg/ffmpeg';
+import { fetchFile } from '@ffmpeg/util';
+import { Check, Clapperboard, Download, FileVideo, FolderOpen, Home, LoaderCircle, Music2, Palette, Save, Settings, SlidersHorizontal, Sparkles, Upload, Video, X } from 'lucide-react';
+
+type Page = 'Home' | 'Editor' | 'Projects' | 'Settings';
+type LanguageCode = 'en'|'ta'|'hi'|'te'|'kn'|'ml'|'bn'|'mr'|'gu'|'pa'|'ur'|'es'|'fr'|'de'|'id'|'ar';
+const LANGUAGES: {code: LanguageCode; label: string}[] = [
+  {code:'en',label:'English'},{code:'ta',label:'தமிழ்'},{code:'hi',label:'हिन्दी'},{code:'te',label:'తెలుగు'},{code:'kn',label:'ಕನ್ನಡ'},{code:'ml',label:'മലയാളം'},{code:'bn',label:'বাংলা'},{code:'mr',label:'मराठी'},{code:'gu',label:'ગુજરાતી'},{code:'pa',label:'ਪੰਜਾਬੀ'},{code:'ur',label:'اردو'},{code:'es',label:'Español'},{code:'fr',label:'Français'},{code:'de',label:'Deutsch'},{code:'id',label:'Bahasa Indonesia'},{code:'ar',label:'العربية'}
+];
+const TRANSLATIONS: Partial<Record<LanguageCode, Record<string,string>>> = {
+ en:{home:'Home',edit:'Edit',create:'Create',projects:'Projects',settings:'Settings',preferences:'Preferences',language:'Language',exportQuality:'Export quality',aspectRatio:'Aspect ratio',privacy:'Privacy',storage:'Storage',notifications:'Notifications',version:'Version',updates:'Updates',about:'About this build',videoEngine:'Video engine',localPreview:'Local preview',loaded:'Loaded',loadsOnExport:'Loads on export',enabled:'Enabled',notImplemented:'Not implemented',clearRecent:'Clear recent project names',save:'Save project',importVideo:'Import video',newProject:'New project',importToStart:'Import a video to start editing',chooseFile:'Choose file',replace:'Replace',reset:'Reset',adjustments:'Adjustments',clipControls:'Clip controls',colourPreset:'Colour preset',trimStart:'Trim start',trimEnd:'Trim end',outputSize:'Output size',playbackSpeed:'Playback speed',rotation:'Rotation',frameFit:'Frame fit',replacementAudio:'Replacement audio',chooseAudio:'Choose audio',renderVideo:'Render video',savedProjects:'Saved projects',openProject:'Open project settings'},
+ ta:{home:'முகப்பு',edit:'திருத்து',create:'உருவாக்கு',projects:'ப்ராஜெக்ட்கள்',settings:'அமைப்புகள்',preferences:'விருப்பங்கள்',language:'மொழி',exportQuality:'ஏற்றுமதி தரம்',aspectRatio:'விகிதம்',privacy:'தனியுரிமை',storage:'சேமிப்பு',notifications:'அறிவிப்புகள்',version:'பதிப்பு',updates:'புதுப்பிப்புகள்',about:'இந்த பதிப்பு பற்றி',videoEngine:'வீடியோ எஞ்சின்',localPreview:'உள்ளூர் முன்னோட்டம்',loaded:'ஏற்றப்பட்டது',loadsOnExport:'Export போது ஏற்றப்படும்',enabled:'இயக்கத்தில்',notImplemented:'இன்னும் இல்லை',clearRecent:'சமீபத்திய பெயர்களை நீக்கு',save:'ப்ராஜெக்டை சேமி',importVideo:'வீடியோவை தேர்வு செய்',newProject:'புதிய ப்ராஜெக்ட்',importToStart:'திருத்த வீடியோவை தேர்வு செய்',chooseFile:'கோப்பை தேர்வு செய்',replace:'மாற்று',reset:'மீட்டமை',adjustments:'சரிசெய்தல்',clipControls:'கிளிப் கட்டுப்பாடுகள்',colourPreset:'நிற வடிவம்',trimStart:'தொடக்க வெட்டு',trimEnd:'முடிவு வெட்டு',outputSize:'வெளியீட்டு அளவு',playbackSpeed:'இயக்க வேகம்',rotation:'சுழற்சி',frameFit:'ஃப்ரேம் பொருத்தம்',replacementAudio:'மாற்று ஆடியோ',chooseAudio:'ஆடியோ தேர்வு',renderVideo:'வீடியோ உருவாக்கு',savedProjects:'சேமித்த ப்ராஜெக்ட்கள்',openProject:'ப்ராஜெக்ட் அமைப்புகளை திற'},
+ hi:{home:'होम',edit:'संपादन',create:'बनाएँ',projects:'प्रोजेक्ट',settings:'सेटिंग्स',preferences:'प्राथमिकताएँ',language:'भाषा',exportQuality:'एक्सपोर्ट गुणवत्ता',aspectRatio:'आस्पेक्ट रेशियो',privacy:'गोपनीयता',storage:'स्टोरेज',notifications:'सूचनाएँ',version:'संस्करण',updates:'अपडेट',about:'इस बिल्ड के बारे में',videoEngine:'वीडियो इंजन',localPreview:'लोकल प्रीव्यू',loaded:'लोडेड',loadsOnExport:'एक्सपोर्ट पर लोड',enabled:'सक्षम',notImplemented:'उपलब्ध नहीं',clearRecent:'हाल के नाम हटाएँ',save:'प्रोजेक्ट सेव',importVideo:'वीडियो आयात करें',newProject:'नया प्रोजेक्ट',importToStart:'संपादन के लिए वीडियो चुनें',chooseFile:'फ़ाइल चुनें',replace:'बदलें',reset:'रीसेट',adjustments:'समायोजन',clipControls:'क्लिप नियंत्रण',colourPreset:'कलर प्रीसेट',trimStart:'शुरुआत ट्रिम',trimEnd:'अंत ट्रिम',outputSize:'आउटपुट आकार',playbackSpeed:'प्लेबैक गति',rotation:'घुमाएँ',frameFit:'फ्रेम फिट',replacementAudio:'वैकल्पिक ऑडियो',chooseAudio:'ऑडियो चुनें',renderVideo:'वीडियो रेंडर',savedProjects:'सेव किए प्रोजेक्ट',openProject:'प्रोजेक्ट सेटिंग खोलें'},
+};
+
+type FilterName = 'Original' | 'Cinematic' | 'Purple Dream' | 'Gold Warm' | 'Mono' | 'Vintage' | 'Moody' | 'Vivid' | 'Teal Orange';
+type ProjectSnapshot = { version: 1; name: string; ratio: string; quality: string; filter: FilterName; speed: number; rotation: number; crop: string; trimStart: number; trimEnd: number; createdAt: string };
+
+const FILTERS: Record<FilterName, { preview: string; ffmpeg: string }> = {
+  Original: { preview: 'none', ffmpeg: 'eq=contrast=1:saturation=1:brightness=0' },
+  Cinematic: { preview: 'contrast(1.15) saturate(1.12) brightness(.97)', ffmpeg: 'eq=contrast=1.15:saturation=1.12:brightness=-0.02' },
+  'Purple Dream': { preview: 'saturate(1.18) hue-rotate(14deg) contrast(1.06)', ffmpeg: 'colorbalance=rs=0.05:bs=0.08,eq=contrast=1.06:saturation=1.18' },
+  'Gold Warm': { preview: 'sepia(.24) saturate(1.25) contrast(1.05)', ffmpeg: 'colorbalance=rs=0.08:gs=0.025:bs=-0.06,eq=contrast=1.05:saturation=1.25' },
+  Mono: { preview: 'grayscale(1)', ffmpeg: 'hue=s=0' },
+  Vintage: { preview: 'sepia(.5) contrast(.94) saturate(.82)', ffmpeg: 'colorbalance=rs=0.04:gs=0.015:bs=-0.04,eq=contrast=0.94:saturation=0.82' },
+  Moody: { preview: 'brightness(.84) contrast(1.22) saturate(.8)', ffmpeg: 'eq=brightness=-0.06:contrast=1.22:saturation=0.8' },
+  Vivid: { preview: 'saturate(1.65) contrast(1.08)', ffmpeg: 'eq=contrast=1.08:saturation=1.65' },
+  'Teal Orange': { preview: 'saturate(1.25) contrast(1.1) hue-rotate(-8deg)', ffmpeg: 'colorbalance=rs=0.06:gs=-0.015:bs=0.05,eq=contrast=1.1:saturation=1.25' },
+};
+const RATIOS: Record<string, [number, number]> = { '9:16': [1080, 1920], '16:9': [1920, 1080], '1:1': [1080, 1080], '4:5': [864, 1080] };
+const MAX_VIDEO_BYTES = 250 * 1024 * 1024;
+
+export default function App() {
+  const [page, setPage] = useState<Page>('Home');
+  const [language, setLanguage] = useState<LanguageCode>(() => { try { const saved = localStorage.getItem('cuttan-language') as LanguageCode | null; return saved && LANGUAGES.some(x => x.code === saved) ? saved : 'en'; } catch { return 'en'; } });
+  const t = (key: string): string => TRANSLATIONS[language]?.[key] || TRANSLATIONS.en?.[key] || key;
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [videoUrl, setVideoUrl] = useState('');
+  const [audioFile, setAudioFile] = useState<File | null>(null);
+  const [audioUrl, setAudioUrl] = useState('');
+  const [filter, setFilter] = useState<FilterName>('Purple Dream');
+  const [ratio, setRatio] = useState('9:16');
+  const [quality, setQuality] = useState('1080p');
+  const [speed, setSpeed] = useState(1);
+  const [rotation, setRotation] = useState(0);
+  const [crop, setCrop] = useState<'fill' | 'fit'>('fill');
+  const [trimStart, setTrimStart] = useState(0);
+  const [trimEnd, setTrimEnd] = useState(100);
+  const handleTrimStart = (v: number) => { setTrimStart(Math.min(v, trimEnd - 10)); };
+  const handleTrimEnd = (v: number) => { setTrimEnd(Math.max(v, trimStart + 10)); };
+  const [duration, setDuration] = useState(0);
+  const [toast, setToast] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [engineReady, setEngineReady] = useState(false);
+  const [engineError, setEngineError] = useState('');
+  const [savedProjects, setSavedProjects] = useState<string[]>([]);
+  const [projectName, setProjectName] = useState('My CUTTAN Project');
+  const videoElement = useRef<HTMLVideoElement>(null);
+  const videoInput = useRef<HTMLInputElement>(null);
+  const audioInput = useRef<HTMLInputElement>(null);
+  const projectInput = useRef<HTMLInputElement>(null);
+  const ffmpegRef = useRef<FFmpeg | null>(null);
+  const toastTimer = useRef<number | undefined>(undefined);
+
+  useEffect(() => {
+    try { setSavedProjects(JSON.parse(localStorage.getItem('cuttan-project-names') || '[]')); } catch { setSavedProjects([]); }
+    return () => { if (toastTimer.current) window.clearTimeout(toastTimer.current); };
+  }, []);
+  useEffect(() => { if (videoElement.current) videoElement.current.playbackRate = speed; }, [speed, videoUrl]);
+  useEffect(() => () => { if (videoUrl) URL.revokeObjectURL(videoUrl); }, [videoUrl]);
+  useEffect(() => () => { if (audioUrl) URL.revokeObjectURL(audioUrl); }, [audioUrl]);
+
+  const notify = (msg: string) => {
+    setToast(msg);
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(''), 3200);
+  };
+  const loadVideo = (file?: File) => {
+    if (!file) return;
+    if (!file.type.startsWith('video/')) { notify('Choose a video file.'); return; }
+    if (file.size > MAX_VIDEO_BYTES) { notify('This build limits video input to 250 MB for device safety.'); return; }
+    const url = URL.createObjectURL(file);
+    setVideoUrl(old => { if (old) URL.revokeObjectURL(old); return url; });
+    setVideoFile(file); setProjectName(file.name.replace(/\.[^.]+$/, '') || 'My CUTTAN Project');
+    handleTrimStart(0); handleTrimEnd(100); setDuration(0); setPage('Editor');
+    notify('Video loaded locally. It has not been uploaded.');
+  };
+  const loadAudio = (file?: File) => {
+    if (!file) return;
+    if (!file.type.startsWith('audio/')) { notify('Choose an audio file.'); return; }
+    const url = URL.createObjectURL(file);
+    setAudioUrl(old => { if (old) URL.revokeObjectURL(old); return url; });
+    setAudioFile(file); notify('Audio loaded. Export will use it as replacement audio, not mix it with source audio.');
+  };
+  const snapshot = (): ProjectSnapshot => ({ version: 1, name: projectName, ratio, quality, filter, speed, rotation, crop, trimStart, trimEnd, createdAt: new Date().toISOString() });
+  const saveProject = () => {
+    const data = snapshot();
+    const next = [projectName, ...savedProjects.filter(x => x !== projectName)].slice(0, 20);
+    setSavedProjects(next);
+    try { localStorage.setItem('cuttan-project-names', JSON.stringify(next)); } catch { /* download remains available */ }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `${safeName(projectName)}.cuttan.json`; a.click(); window.setTimeout(() => URL.revokeObjectURL(url), 30_000);
+    notify('Project settings saved as a .cuttan.json file. Keep the source media too.');
+  };
+  const openProject = async (file?: File) => {
+    if (!file) return;
+    try {
+      const data = JSON.parse(await file.text()) as ProjectSnapshot;
+      if (data.version !== 1 || typeof data.name !== 'string' || !(data.filter in FILTERS) || !(data.ratio in RATIOS)) throw new Error('Unsupported project format');
+      setProjectName(data.name); setRatio(data.ratio); setQuality(data.quality === '720p' ? '720p' : '1080p'); setFilter(data.filter); setSpeed(clamp(data.speed, .25, 2)); setRotation([0, 90, 180, 270].includes(data.rotation) ? data.rotation : 0); setCrop(data.crop === 'fit' ? 'fit' : 'fill'); handleTrimStart(clamp(data.trimStart, 0, 99)); handleTrimEnd(clamp(data.trimEnd, 1, 100)); setPage('Editor');
+      notify('Project settings restored. Re-import its source video/audio to preview and export.');
+    } catch { notify('Could not open this project file.'); }
+  };
+  const loadEngine = async () => {
+    if (ffmpegRef.current?.loaded) { setEngineReady(true); return ffmpegRef.current; }
+    setBusy(true); setProgress(0); setEngineError('');
+    try {
+      const ffmpeg = ffmpegRef.current || new FFmpeg();
+      ffmpeg.on('progress', ({ progress: p }) => setProgress(Math.max(0, Math.min(99, Math.round(p * 100)))));
+      ffmpeg.on('log', () => { /* FFmpeg logs are intentionally not exposed in the UI */ });
+      await ffmpeg.load({
+      coreURL: '/ffmpeg/ffmpeg-core.js',
+      wasmURL: '/ffmpeg/ffmpeg-core.wasm',
+    });
+      ffmpegRef.current = ffmpeg; setEngineReady(true); return ffmpeg;
+    } catch (e) {
+      const message = e instanceof Error ? e.message : 'Unknown engine error';
+      setEngineError(message); notify('Video engine could not load. Run the project build first and try again.'); throw e;
+    } finally { setBusy(false); }
+  };
+  const exportVideo = async () => {
+    if (!videoFile) { notify('Import a video before exporting.'); return; }
+    if (trimEnd <= trimStart) { notify('Trim end must be greater than trim start.'); return; }
+    setBusy(true); setProgress(0);
+    let ffmpeg: FFmpeg | null = null;
+    const inName = `input-${Date.now()}.${extension(videoFile.name)}`;
+    const audioName = `audio-${Date.now()}.${extension(audioFile?.name || 'audio.m4a')}`;
+    const outName = `cuttan-export-${Date.now()}.mp4`;
+    try {
+      ffmpeg = await loadEngine();
+      setBusy(true);
+      await ffmpeg.writeFile(inName, await fetchFile(videoFile));
+      if (audioFile) await ffmpeg.writeFile(audioName, await fetchFile(audioFile));
+      const [rw, rh] = RATIOS[ratio];
+      const size = quality === '720p' ? [Math.round(rw * .6667), Math.round(rh * .6667)] : [rw, rh];
+      const vf: string[] = [];
+      if (rotation === 90) vf.push('transpose=1'); else if (rotation === 180) vf.push('hflip', 'vflip'); else if (rotation === 270) vf.push('transpose=2');
+      if (crop === 'fill') vf.push(`scale=${size[0]}:${size[1]}:force_original_aspect_ratio=increase`, `crop=${size[0]}:${size[1]}`);
+      else vf.push(`scale=${size[0]}:${size[1]}:force_original_aspect_ratio=decrease`, `pad=${size[0]}:${size[1]}:(ow-iw)/2:(oh-ih)/2:black`);
+      vf.push(FILTERS[filter].ffmpeg);
+      if (speed !== 1) vf.push(`setpts=${(1 / speed).toFixed(4)}*PTS`);
+      const startSec = duration > 0 ? duration * trimStart / 100 : 0;
+      const endSec = duration > 0 ? duration * trimEnd / 100 : 0;
+      const args = ['-y', '-ss', startSec.toFixed(3), '-i', inName];
+      if (audioFile) args.push('-i', audioName);
+      if (duration > 0) args.push('-t', Math.max(.1, endSec - startSec).toFixed(3));
+      args.push('-vf', vf.join(','), '-map', '0:v:0');
+      if (audioFile) args.push('-map', '1:a:0'); else args.push('-map', '0:a?');
+      if (speed !== 1) args.push('-af', `atempo=${speed}`);
+      args.push('-c:v', 'libx264', '-preset', 'ultrafast', '-crf', quality === '720p' ? '26' : '23', '-pix_fmt', 'yuv420p', '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', outName);
+      await ffmpeg.exec(args);
+      const result = await ffmpeg.readFile(outName);
+      if (!(result instanceof Uint8Array) || result.byteLength < 1024) throw new Error('Rendered output was empty or invalid.');
+      const blob = new Blob([result.slice().buffer as ArrayBuffer], { type: 'video/mp4' });
+      const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `${safeName(projectName)}-${ratio.replace(':','x')}-${quality}.mp4`; a.click(); window.setTimeout(() => URL.revokeObjectURL(url), 30_000);
+      setProgress(100); notify('MP4 render completed. Check your Downloads folder.');
+      await ffmpeg.deleteFile(inName).catch(() => undefined); if (audioFile) await ffmpeg.deleteFile(audioName).catch(() => undefined); await ffmpeg.deleteFile(outName).catch(() => undefined);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : 'Unknown export error';
+      setEngineError(message); notify(`Export failed: ${message.slice(0, 110)}`);
+      if (ffmpeg) { await ffmpeg.deleteFile(inName).catch(() => undefined); if (audioFile) await ffmpeg.deleteFile(audioName).catch(() => undefined); await ffmpeg.deleteFile(outName).catch(() => undefined); }
+    } finally { setBusy(false); }
+  };
+  const resetEditor = () => { setFilter('Original'); setRatio('9:16'); setQuality('1080p'); setSpeed(1); setRotation(0); setCrop('fill'); handleTrimStart(0); handleTrimEnd(100); notify('Edit controls reset.'); };
+  const previewStyle = { filter: FILTERS[filter].preview, objectFit: crop === 'fill' ? 'cover' as const : 'contain' as const, transform: `rotate(${rotation}deg) scale(${crop === 'fill' ? 1.03 : .94})` };
+
+  return <div className="app-shell">
+    <header className="topbar"><button className="brand" onClick={() => setPage('Home')} aria-label="CUTTAN home"><span className="brand-mark">C</span><span><b>CUTTAN</b><small>PURPLE LUXURY STUDIO</small></span></button><span className="privacy-pill"><span className="dot"/> LOCAL MEDIA</span></header>
+    {toast && <div className="toast" role="status"><Check size={16}/>{toast}<button aria-label="Dismiss" onClick={() => setToast('')}><X size={14}/></button></div>}
+    {page === 'Home' && <main className="page home-page"><section className="hero"><div className="hero-badge"><Sparkles size={14}/> COLOUR YOUR STORY</div><h1>Make every frame<br/><em>feel cinematic.</em></h1><p>Import a clip, colour grade it, trim the duration and render an MP4 locally on your device.</p><button className="primary-button" onClick={() => videoInput.current?.click()}><Upload size={18}/> Import video</button><div className="hero-foot"><span><Check size={13}/> Media stays in your browser</span><span><Check size={13}/> No account required</span></div></section>
+      <section className="section-head"><div><p className="eyebrow">YOUR WORKSPACE</p><h2>Start creating</h2></div><span className="subtle-count">4 QUICK TOOLS</span></section>
+      <div className="quick-grid"><button onClick={() => {setPage('Editor'); videoInput.current?.click();}}><span className="quick-icon"><Video/></span><b>Video edit</b><small>Trim & export</small></button><button onClick={() => {setPage('Editor');setFilter('Purple Dream');}}><span className="quick-icon"><Palette/></span><b>Colour grade</b><small>9 original presets</small></button><button onClick={() => audioInput.current?.click()}><span className="quick-icon"><Music2/></span><b>Add audio</b><small>Replace soundtrack</small></button><button onClick={() => projectInput.current?.click()}><span className="quick-icon"><FolderOpen/></span><b>Open project</b><small>Restore settings</small></button></div>
+      <section className="panel feature-panel"><div className="section-head compact"><div><p className="eyebrow">PURPLE COLLECTION</p><h2>Colour presets</h2></div><button className="text-button" onClick={() => setPage('Editor')}>Open editor ↗</button></div><div className="preset-grid">{(Object.keys(FILTERS) as FilterName[]).slice(1, 7).map((name, i) => <button className={`preset-card preset-${i}`} key={name} onClick={() => {setFilter(name);setPage('Editor');}}><span className="preset-preview" style={{filter:FILTERS[name].preview}}><Sparkles size={22}/></span><b>{name}</b></button>)}</div></section>
+      <section className="notice-card"><SlidersHorizontal size={18}/><div><b>Honest editing tools</b><p>Current build renders one video clip with trim, ratio, rotation, speed, colour and optional replacement audio. Multi-track compositing is not included yet.</p></div></section>
+    </main>}
+    {page === 'Editor' && <main className="page editor-page"><div className="editor-heading"><div><p className="eyebrow">{t('edit')} WORKSPACE</p><h2>{videoFile ? projectName : t('newProject')}</h2><p className="muted small">{videoFile ? `${videoFile.name} · ${formatBytes(videoFile.size)}` : t('importToStart')}</p></div><button className="icon-button" onClick={saveProject} title="Save project settings"><Save/></button></div>
+      <div className={`preview-frame ratio-${ratio.replace(':','-')}`}><div className="preview-glow"/>{videoUrl ? <video ref={videoElement} key={videoUrl} src={videoUrl} controls playsInline onLoadedMetadata={e => setDuration(e.currentTarget.duration)} style={previewStyle}/> : <button className="preview-empty" onClick={() => videoInput.current?.click()}><span><FileVideo size={28}/></span><b>{t('importVideo')}</b><small>MP4, WebM or another browser-supported format</small><span className="empty-action"><Upload size={15}/> {t('chooseFile')}</span></button>}{videoUrl && <div className="preview-label"><span className="dot"/> LIVE PREVIEW</div>}</div>
+      <div className="transport-row"><span>{duration ? `${formatTime(duration * trimStart / 100)} / ${formatTime(duration * trimEnd / 100)}` : 'Preview ready'}</span><button className="mini-button" onClick={() => videoInput.current?.click()}><Upload size={14}/> {t('replace')}</button><button className="mini-button" onClick={resetEditor}>{t('reset')}</button></div>
+      <section className="panel controls-panel"><div className="section-head compact"><div><p className="eyebrow">{t('adjustments')}</p><h3>{t('clipControls')}</h3></div><span className="live-tag">LIVE</span></div>
+        <div className="control-block"><label className="control-label">{t('colourPreset')} <strong>{filter}</strong></label><div className="filter-scroll">{(Object.keys(FILTERS) as FilterName[]).map((name, i) => <button key={name} className={`filter-chip ${filter===name?'selected':''}`} onClick={() => setFilter(name)}><span className={`filter-dot filter-dot-${i}`}/>{name}</button>)}</div></div>
+        <div className="control-block"><label className="control-label">{t('trimStart')} <strong>{trimStart}%</strong></label><input type="range" min="0" max="99" value={trimStart} onChange={e => handleTrimStart(Math.min(Number(e.target.value), trimEnd-1))}/><label className="control-label space-top">{t('trimEnd')} <strong>{trimEnd}%</strong></label><input type="range" min="1" max="100" value={trimEnd} onChange={e => handleTrimEnd(Math.max(Number(e.target.value), trimStart+1))}/><p className="helper-text">Trim is applied to the rendered file when the video duration can be read by the browser.</p></div>
+        <div className="two-controls"><div className="control-block"><label className="control-label">{t('aspectRatio')}</label><div className="chips">{Object.keys(RATIOS).map(v => <button key={v} className={ratio===v?'chip selected':'chip'} onClick={() => setRatio(v)}>{v}</button>)}</div></div><div className="control-block"><label className="control-label">{t('outputSize')}</label><div className="chips">{['720p','1080p'].map(v => <button key={v} className={quality===v?'chip selected':'chip'} onClick={() => setQuality(v)}>{v}</button>)}</div></div></div>
+        <div className="two-controls"><div className="control-block"><label className="control-label">{t('playbackSpeed')} <strong>{speed}×</strong></label><select value={speed} onChange={e => setSpeed(Number(e.target.value))}>{[.25,.5,.75,1,1.25,1.5,2].map(v=><option key={v} value={v}>{v}×</option>)}</select></div><div className="control-block"><label className="control-label">{t('rotation')}</label><div className="chips">{[0,90,180,270].map(v=><button key={v} className={rotation===v?'chip selected':'chip'} onClick={() => setRotation(v)}>{v}°</button>)}</div></div></div>
+        <div className="control-block"><label className="control-label">{t('frameFit')}</label><div className="chips"><button className={crop==='fill'?'chip selected':'chip'} onClick={() => setCrop('fill')}>Fill / crop</button><button className={crop==='fit'?'chip selected':'chip'} onClick={() => setCrop('fit')}>Fit / letterbox</button></div></div>
+        <div className="control-block audio-control"><div><label className="control-label">{t('replacementAudio')}</label><p className="helper-text">{audioFile ? `${audioFile.name} · replaces original audio` : 'Optional audio track for the exported video'}</p></div><button className="outline-button" onClick={() => audioInput.current?.click()}><Music2 size={15}/> {t('chooseAudio')}</button>{audioFile && <button className="remove-audio" onClick={() => {setAudioFile(null);setAudioUrl(old=>{if(old)URL.revokeObjectURL(old);return '';});}}>Remove</button>}{audioUrl && <audio controls src={audioUrl}/>}</div>
+      </section>
+      <section className="render-panel"><div className="render-heading"><div><p className="eyebrow">FINAL OUTPUT</p><h3>{t('renderVideo')}</h3></div><span className="render-icon"><Clapperboard/></span></div><p className="muted small">Rendering runs locally in your browser using FFmpeg WebAssembly. Long clips may be slow or exceed Android memory limits.</p>{busy && <div className="progress-wrap"><div className="progress-meta"><span><LoaderCircle className="spin" size={14}/> {engineReady?'Rendering MP4…':'Loading video engine…'}</span><b>{progress}%</b></div><div className="progress-track"><div style={{width:`${progress}%`}}/></div></div>}{engineError && <p className="error-text">Last engine error: {engineError.slice(0,180)}</p>}<button className="primary-button export-button" disabled={busy||!videoFile} onClick={exportVideo}>{busy?<><LoaderCircle className="spin"/> Processing…</>:<><Download size={18}/> Export MP4 · {quality}</>}</button><p className="helper-text center">No export success message is shown unless FFmpeg returns a non-empty output file.</p></section>
+    </main>}
+    {page === 'Projects' && <main className="page"><p className="eyebrow">PROJECT LIBRARY</p><h2>{t('savedProjects')}</h2><p className="muted">This list stores project names only. Use the exported .cuttan.json file to restore edit settings; source media must be selected again.</p><button className="primary-button" onClick={() => projectInput.current?.click()}><FolderOpen size={17}/> {t('openProject')}</button>{savedProjects.length ? savedProjects.map((name,i)=><div className="project-row" key={`${name}-${i}`}><span className="project-file"><FileVideo/></span><span>{name}</span><button className="text-button" onClick={() => {setProjectName(name);setPage('Editor');notify('Re-import the source media and open the matching project JSON to restore settings.');}}>Select</button></div>) : <div className="empty-state"><FolderOpen size={28}/><b>No saved project names yet</b><small>Open a video and save project settings to start.</small></div>}</main>}
+    {page === 'Settings' && <main className="page settings-page"><p className="eyebrow">{t('preferences').toUpperCase()}</p><h2>{t('settings')}</h2>
+      <section className="pro-settings-card"><div className="pro-settings-mark"><Sparkles size={22}/></div><div><b>CUTTAN PRO</b><p>{language === 'ta' ? 'Purple Luxury Studio' : 'Purple Luxury Studio'}</p></div><span className="pro-pill">PRO</span></section>
+      <section className="panel settings-card"><h3><Settings size={18}/> {t('preferences')}</h3>
+        <label className="settings-row settings-select-row"><span>{t('language')}</span><select aria-label={t('language')} value={language} onChange={e=>{const next=e.target.value as LanguageCode;setLanguage(next);try{localStorage.setItem('cuttan-language',next);}catch{} }}>{LANGUAGES.map(item=><option key={item.code} value={item.code}>{item.label}</option>)}</select></label>
+        <label className="settings-row settings-select-row"><span>{t('exportQuality')}</span><select value={quality} onChange={e=>setQuality(e.target.value)}><option value="720p">720p</option><option value="1080p">1080p</option></select></label>
+        <label className="settings-row settings-select-row"><span>{t('aspectRatio')}</span><select value={ratio} onChange={e=>setRatio(e.target.value)}>{Object.keys(RATIOS).map(v=><option key={v} value={v}>{v}</option>)}</select></label>
+        <div className="settings-row"><span>{t('privacy')}</span><strong>Local-first</strong></div><div className="settings-row"><span>{t('storage')}</span><strong>{t('videoEngine')}: {engineReady?t('loaded'):t('loadsOnExport')}</strong></div><div className="settings-row"><span>{t('notifications')}</span><strong className="good">{t('enabled')}</strong></div><div className="settings-row"><span>{t('version')}</span><strong>v1.0.0</strong></div><div className="settings-row"><span>{t('updates')}</span><strong className="not-ready">Manual check</strong></div>
+        <p className="helper-text">This build has no account, subscription, cloud backup or automatic update service. Language currently translates the primary navigation, settings and key editor controls; untranslated descriptive copy remains English.</p>
+        <button className="outline-button full-width" onClick={() => {setSavedProjects([]);localStorage.removeItem('cuttan-project-names');notify('Saved project-name list cleared.');}}>{t('clearRecent')}</button>
+      </section><section className="panel support-card"><h3>Support & Contact</h3><p>bharataitoolsindia0036@gmail.com</p><small>Offline first · Made for creators</small></section>
+    </main>}
+    <nav className="bottom-nav"><button className={page==='Home'?'nav-item active':'nav-item'} onClick={() => setPage('Home')}><Home/><span>{t('home')}</span></button><button className={page==='Editor'?'nav-item active':'nav-item'} onClick={() => setPage('Editor')}><Video/><span>{t('edit')}</span></button><button className="nav-create" onClick={() => videoInput.current?.click()}><Upload/><span>{t('create')}</span></button><button className={page==='Projects'?'nav-item active':'nav-item'} onClick={() => setPage('Projects')}><FolderOpen/><span>{t('projects')}</span></button><button className={page==='Settings'?'nav-item active':'nav-item'} onClick={() => setPage('Settings')}><Settings/><span>{t('settings')}</span></button></nav>
+    <input ref={videoInput} type="file" accept="video/*" hidden onChange={e => {loadVideo(e.target.files?.[0]);e.currentTarget.value='';}}/><input ref={audioInput} type="file" accept="audio/*" hidden onChange={e => {loadAudio(e.target.files?.[0]);e.currentTarget.value='';}}/><input ref={projectInput} type="file" accept=".json,.cuttan.json,application/json" hidden onChange={e => {void openProject(e.target.files?.[0]);e.currentTarget.value='';}}/>
+  </div>;
+}
+function safeName(value: string) { return value.trim().replace(/[^a-z0-9-_]+/gi, '-').replace(/^-+|-+$/g, '').slice(0,70) || 'cuttan-project'; }
+function extension(value: string) { const ext = value.split('.').pop()?.toLowerCase().replace(/[^a-z0-9]/g,'') || ''; return ext.slice(0,8) || 'bin'; }
+function clamp(value: number, min: number, max: number) { return Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : min; }
+function formatBytes(bytes: number) { if (bytes < 1024*1024) return `${Math.round(bytes/1024)} KB`; return `${(bytes/(1024*1024)).toFixed(1)} MB`; }
+function formatTime(value: number) { if (!Number.isFinite(value)) return '0:00'; const seconds = Math.floor(value); return `${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`; }
