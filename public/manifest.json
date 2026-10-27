@@ -1,7 +1,8 @@
+
 {
   "name": "CUTTAN Video LUT Editor",
   "short_name": "CUTTAN",
-  "description": "Local-first video colour and trim studio - Professional LUTs & Trim",
+  "description": "Local-first video colour and trim studio",
   "id": "/",
   "start_url": "/?source=pwa",
   "scope": "/",
@@ -15,129 +16,22 @@
   "categories": ["photo", "video", "utilities"],
   "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-e961737f5c94",
   "icons": [
-    {
-      "src": "/icons/cuttan-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/cuttan-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/cuttan-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    { "src": "/icons/cuttan-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "screenshots": [
-    {
-      "src": "/icons/cuttan-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "CUTTAN Editor Desktop"
-    },
-    {
-      "src": "/icons/cuttan-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "CUTTAN Editor Mobile"
-    }
+    { "src": "/icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "form_factor": "wide", "label": "CUTTAN Desktop" },
+    { "src": "/icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "form_factor": "narrow", "label": "CUTTAN Mobile" }
   ],
   "shortcuts": [
-    {
-      "name": "Open CUTTAN Editor",
-      "short_name": "Editor",
-      "description": "Quick open video editor",
-      "url": "/?shortcut=editor",
-      "icons": [{ "src": "/icons/cuttan-192.png", "sizes": "192x192", "type": "image/png" }]
-    },
-    {
-      "name": "Trim Video",
-      "short_name": "Trim",
-      "description": "Trim your video quickly",
-      "url": "/?shortcut=trim",
-      "icons": [{ "src": "/icons/cuttan-192.png", "sizes": "192x192", "type": "image/png" }]
-    }
+    { "name": "Open Editor", "url": "/?shortcut=editor", "icons": [{ "src": "/icons/cuttan-192.png", "sizes": "192x192" }] }
   ],
-  "launch_handler": {
-    "client_mode": ["navigate-existing", "auto"]
-  },
+  "launch_handler": { "client_mode": ["navigate-existing", "auto"] },
   "handle_links": "preferred",
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
-  "file_handlers": [
-    {
-      "action": "/",
-      "accept": {
-        "video/*": [".mp4", ".mov", ".webm", ".avi"],
-        "image/*": [".png", ".jpg", ".jpeg"]
-      }
-    }
-  ],
-  "share_target": {
-    "action": "/",
-    "method": "POST",
-    "enctype": "multipart/form-data",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url",
-      "files": [
-        {
-          "name": "video",
-          "accept": ["video/*", "image/*"]
-        }
-      ]
-    }
-  },
-  "protocol_handlers": [
-    {
-      "protocol": "web+cuttan",
-      "url": "/?protocol=%s"
-    }
-  ],
+  "file_handlers": [{ "action": "/", "accept": { "video/*": [".mp4", ".mov"] } }],
+  "share_target": { "action": "/", "method": "POST", "enctype": "multipart/form-data", "params": { "files": [{ "name": "video", "accept": ["video/*"] }] } },
+  "protocol_handlers": [{ "protocol": "web+cuttan", "url": "/?protocol=%s" }],
   "related_applications": [],
-  "prefer_related_applications": false,
-  "scope_extensions": [
-    {
-      "origin": "*.vercel.app"
-    }
-  ],
-  "widgets": [
-    {
-      "name": "CUTTAN Quick",
-      "description": "Quick trim widget",
-      "tag": "quick-trim",
-      "template": "quick-trim",
-      "msAcTemplate": "{}",
-      "data": "/",
-      "type": "application/json",
-      "screenshots": [
-        {
-          "src": "/icons/cuttan-512.png",
-          "sizes": "512x512",
-          "label": "widget"
-        }
-      ],
-      "icons": [
-        {
-          "src": "/icons/cuttan-192.png",
-          "sizes": "192x192"
-        }
-      ]
-    }
-  ],
-  "note_taking": {
-    "new": {
-      "url": "/?note=new"
-    }
-  }
+  "prefer_related_applications": false
 }
