@@ -1,13 +1,16 @@
 {
-  "name": "CUTTAN Video Library",
+  "name": "CUTTAN Video LUT Editor",
   "short_name": "CUTTAN",
-  "description": "Local-first Video Library with 50+ tools",
-  "start_url": "/CUTTAN-Purple-Luxury-Source/",
-  "scope": "/CUTTAN-Purple-Luxury-Source/",
+  "description": "Local-first video colour and trim studio",
+  "id": "/CUTTAN-Purple-Luxury-Source/",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#1a0033",
+  "background_color": "#100817",
   "theme_color": "#100817",
+  "lang": "en",
+  "categories": ["video", "photo", "utilities"],
   "icons": [
     {
       "src": "icons/cuttan-192.png",
@@ -21,8 +24,5 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "id": "/CUTTAN-Purple-Luxury-Source/",
-  "lang": "en",
-  "categories": ["developer tools", "photo & video"]
+  ]
 }
