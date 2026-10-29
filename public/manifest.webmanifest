@@ -1,7 +1,7 @@
-
 {
   "name": "CUTTAN Video LUT Editor",
   "short_name": "CUTTAN",
+  "description": "CUTTAN Purple Luxury - Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support for Indus Appstore.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -12,7 +12,7 @@
       "src": "./icons/cuttan-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "./icons/cuttan-512.png",
