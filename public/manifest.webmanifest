@@ -17,101 +17,25 @@
   "prefer_related_applications": false,
   "related_applications": [],
   "icons": [
-    {
-      "src": "./icons/cuttan-192.png",
-      "sizes": "1254x1254",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/cuttan-512.png",
-      "sizes": "1254x1254",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/cuttan-192.png",
-      "sizes": "1254x1254",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "./icons/cuttan-512.png",
-      "sizes": "1254x1254",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    { "src": "./icons/cuttan-192.png", "sizes": "1254x1254", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png", "purpose": "any" },
+    { "src": "./icons/cuttan-192.png", "sizes": "1254x1254", "type": "image/png", "purpose": "maskable" },
+    { "src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png", "purpose": "maskable" }
   ],
   "screenshots": [
-    {
-      "src": "./icons/cuttan-512.png",
-      "sizes": "1254x1254",
-      "type": "image/png",
-      "form_factor": "narrow",
-      "label": "CUTTAN Portrait"
-    },
-    {
-      "src": "./icons/cuttan-512.png",
-      "sizes": "1254x1254",
-      "type": "image/png",
-      "form_factor": "wide",
-      "label": "CUTTAN Wide"
-    }
+    { "src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png", "form_factor": "narrow", "label": "CUTTAN Portrait" },
+    { "src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png", "form_factor": "wide", "label": "CUTTAN Wide" }
   ],
   "shortcuts": [
-    {
-      "name": "Open Editor",
-      "short_name": "Editor",
-      "description": "Open editor",
-      "url": "/?shortcut=editor",
-      "icons": [
-        {
-          "src": "./icons/cuttan-512.png",
-          "sizes": "1254x1254",
-          "type": "image/png"
-        }
-      ]
-    }
+    { "name": "Open Editor", "short_name": "Editor", "description": "Open CUTTAN editor", "url": "/?shortcut=editor", "icons": [{ "src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png" }] }
   ],
-  "share_target": {
-    "action": "/?share=true",
-    "method": "GET",
-    "params": {
-      "title": "title",
-      "text": "text",
-      "url": "url"
-    }
-  },
-  "file_handlers": [
-    {
-      "action": "/",
-      "accept": {
-        "video/*": [".mp4"]
-      }
-    }
-  ],
-  "protocol_handlers": [
-    {
-      "protocol": "web+cuttan",
-      "url": "/?p=%s"
-    }
-  ],
-  "launch_handler": {
-    "client_mode": ["navigate-existing", "auto"]
-  },
-  "edge_side_panel": {
-    "preferred_width": 400
-  },
+  "share_target": { "action": "/", "method": "GET", "params": { "title": "title", "text": "text", "url": "url" } },
+  "file_handlers": [{ "action": "/", "accept": { "video/*": [".mp4"] } }],
+  "protocol_handlers": [{ "protocol": "web+cuttan", "url": "/?p=%s" }],
+  "launch_handler": { "client_mode": ["navigate-existing", "auto"] },
+  "edge_side_panel": { "preferred_width": 400 },
   "handle_links": "preferred",
-  "scope_extensions": [
-    {
-      "origin": "https://cuttan-purple-luxury-source.vercel.app"
-    }
-  ],
-  "note_taking": {
-    "new": {
-      "url": "/?note=new"
-    }
-  },
+  "scope_extensions": [{ "origin": "https://cuttan-purple-luxury-source.vercel.app" }],
+  "note_taking": { "new": { "url": "/?note=new" } },
   "widgets": []
 }
