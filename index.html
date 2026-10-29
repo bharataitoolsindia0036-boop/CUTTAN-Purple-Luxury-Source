@@ -10,104 +10,84 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="CUTTAN" />
-  
-  <!-- PWA Manifest - GitHub Pages relative path -->
   <link rel="manifest" href="./manifest.webmanifest" />
-  
-  <!-- Icons - PWABuilder 46/46 ku must -->
   <link rel="icon" type="image/png" sizes="192x192" href="./icons/cuttan-192.png" />
   <link rel="icon" type="image/png" sizes="512x512" href="./icons/cuttan-512.png" />
   <link rel="apple-touch-icon" href="./icons/cuttan-192.png" />
-  
-  <!-- Open Graph -->
   <meta property="og:title" content="CUTTAN Purple Luxury" />
   <meta property="og:description" content="Indian Video LUT Studio for creators" />
   <meta property="og:image" content="./icons/cuttan-512.png" />
-  
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #100817;
-      color: #fff;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 20px;
-    }
-    .logo {
-      width: 120px;
-      height: 120px;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #7c3aed, #ec4899);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      font-weight: bold;
-      margin-bottom: 24px;
-      box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);
-    }
+    body { background: #100817; color: #fff; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; }
+    .logo { width: 120px; height: 120px; border-radius: 24px; background: linear-gradient(135deg, #7c3aed, #ec4899); display: flex; align-items: center; justify-content: center; font-size: 48px; font-weight: bold; margin-bottom: 24px; box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3); }
     h1 { font-size: 28px; margin-bottom: 12px; background: linear-gradient(135deg, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     p { color: #a1a1aa; max-width: 400px; line-height: 1.6; margin-bottom: 24px; }
-    .btn {
-      background: linear-gradient(135deg, #7c3aed, #ec4899);
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      border-radius: 12px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-block;
-    }
-    #status { margin-top: 20px; font-size: 12px; color: #71717a; }
+    .btn { background: linear-gradient(135deg, #7c3aed, #ec4899); color: white; border: none; padding: 14px 28px; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+    #status { margin-top: 20px; font-size: 12px; color: #71717a; word-break: break-all; }
   </style>
 </head>
 <body>
   <div class="logo">C</div>
   <h1>CUTTAN Purple Luxury</h1>
   <p>Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support.</p>
-  <a href="./?source=pwa" class="btn">Open Editor</a>
-  <div id="status">PWA Ready - v7 - Offline Support Enabled</div>
+  <a id="openBtn" href="./?source=pwa" class="btn">Open Editor</a>
+  <div id="status">Loading PWA...</div>
 
   <script>
-    // Service Worker Registration - GitHub Pages base path auto-detect
+    // FIXED BASE - GitHub Pages auto detect + fallback
     const BASE = window.location.pathname.includes('/CUTTAN-Purple-Luxury-Source') 
       ? '/CUTTAN-Purple-Luxury-Source' 
       : '';
     
+    // Fix button href with BASE
+    document.getElementById('openBtn').href = `${BASE}/?source=pwa`;
+
+    // Service Worker Registration - FIXED
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register(`${BASE}/sw.js`, { scope: `${BASE}/` })
+        const swUrl = `${BASE}/sw.js`;
+        const swScope = `${BASE}/`;
+        console.log('Registering SW:', swUrl, 'Scope:', swScope);
+        
+        navigator.serviceWorker.register(swUrl, { scope: swScope })
           .then((reg) => {
             console.log('CUTTAN SW Registered:', reg.scope);
-            document.getElementById('status').textContent = `PWA Ready - ${reg.scope} - Offline ✓`;
+            document.getElementById('status').textContent = `PWA Ready - ${reg.scope} - Offline ✓ - v8`;
           })
           .catch((err) => {
             console.error('CUTTAN SW Failed:', err);
-            document.getElementById('status').textContent = 'SW Failed: ' + err.message;
+            document.getElementById('status').textContent = 'SW Failed: ' + err.message + ' - Try hard refresh';
           });
       });
+    } else {
+      document.getElementById('status').textContent = 'Service Worker not supported';
     }
 
-    // PWA Install Prompt
+    // PWA Install Prompt - FIXED & CLOSED
     let deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
       console.log('CUTTAN Install prompt ready');
+      document.getElementById('status').textContent += ' | Install ready';
     });
 
-    // Handle protocol handler ?p=
+    // Handle protocol handler ?p= - FIXED & CLOSED - ITHU THAN MISSING!
     const params = new URLSearchParams(window.location.search);
     if (params.has('p')) {
-      console.log('CUTTAN Protocol:', params.get('p'));
+      const protocolData = params.get('p');
+      console.log('CUTTAN Protocol:', protocolData);
+      document.getElementById('status').textContent += ` | Protocol: ${protocolData}`;
     }
+
+    if (params.has('shortcut')) {
+      console.log('Shortcut:', params.get('shortcut'));
+    }
+
+    // Debug - Show current URL
+    console.log('Current URL:', window.location.href);
+    console.log('BASE:', BASE);
   </script>
 </body>
 </html>
