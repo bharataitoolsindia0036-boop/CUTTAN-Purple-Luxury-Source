@@ -2,84 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#100817">
-<meta name="description" content="CUTTAN Purple Luxury - Indian Video LUT Studio">
-<title>CUTTAN - Purple Luxury Video LUT Studio</title>
+<title>CUTTAN - Purple Luxury</title>
 <link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./icons/cuttan-192.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:#100817;color:#fff;font-family:system-ui,sans-serif}
-header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a1a4a;background:rgba(16,8,23,.9);backdrop-filter:blur(10px);position:sticky;top:0;z-index:10}
-.logo{display:flex;align-items:center;gap:12px}
-.logo-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-weight:900;font-size:22px}
-h1{font-size:18px;background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero{min-height:calc(100vh - 70px);display:grid;place-items:center;padding:20px;text-align:center}
-.c{width:90px;height:90px;border-radius:22px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-size:40px;font-weight:900;margin:0 auto 18px;box-shadow:0 10px 30px rgba(124,58,237,.4)}
-.hero h2{font-size:28px;margin-bottom:12px}
-.hero p{color:#a1a1aa;max-width:380px;line-height:1.6;margin:0 auto 20px}
-.btn{border:0;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 6px 20px rgba(124,58,237,.3)}
-.btn:active{transform:scale(.98)}
-#status{margin-top:18px;font-size:11px;color:#71717a;word-break:break-all}
-#editor{display:none;position:fixed;inset:0;background:#100817;z-index:100;flex-direction:column}
-#editor.active{display:flex}
-.editor-header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a1a4a}
-.editor-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:16px;overflow:auto}
-.video-wrap{width:100%;max-width:400px;aspect-ratio:9/16;background:#000;border-radius:16px;overflow:hidden;position:relative;border:1px solid #2a1a4a}
-video,canvas{width:100%;height:100%;object-fit:cover}
-input[type=file]{display:none}
-.upload{width:100%;max-width:400px;padding:20px;border:2px dashed #3f3f46;border-radius:16px;text-align:center;cursor:pointer}
-.upload:hover{border-color:#7c3aed}
-.filters{display:flex;gap:8px;overflow:auto;width:100%;max-width:400px;padding:4px}
-.filter-btn{flex:0 0 auto;padding:8px 14px;border-radius:20px;border:1px solid #3f3f46;background:#18181b;color:#a1a1aa;font-size:13px;cursor:pointer}
-.filter-btn.active{border-color:#7c3aed;background:rgba(124,58,237,.2);color:#fff}
-.tools{display:flex;gap:10px;width:100%;max-width:400px}
-.tools .btn{flex:1;padding:12px;font-size:14px}
+body{background:#100817;color:#fff;font-family:system-ui;text-align:center}
+header{padding:14px;display:flex;justify-content:space-between;border-bottom:1px solid #2a1a4a}
+.logo{display:flex;gap:10px;align-items:center}
+.logo-icon{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-weight:900}
+.hero{min-height:90vh;display:grid;place-items:center;padding:20px}
+.c{width:80px;height:80px;border-radius:20px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-size:36px;font-weight:900;margin:0 auto 14px}
+.btn{border:0;padding:13px 24px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:700;cursor:pointer}
+#s{margin-top:12px;font-size:11px;color:#71717a}
+#editor{display:none;position:fixed;inset:0;background:#100817;z-index:99;flex-direction:column}
+#editor.on{display:flex}
+.editor-head{padding:12px;display:flex;justify-content:space-between;border-bottom:1px solid #2a1a4a}
+.body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px}
+.vwrap{width:100%;max-width:380px;aspect-ratio:9/16;background:#000;border-radius:14px;overflow:hidden;border:1px solid #2a1a4a}
+video{width:100%;height:100%;object-fit:cover}
+.filters{display:flex;gap:6px;overflow:auto;max-width:380px;width:100%}
+.fbtn{flex:0 0 auto;padding:7px 12px;border-radius:18px;border:1px solid #3f3f46;background:#18181b;color:#a1a1aa;font-size:12px;cursor:pointer}
+.fbtn.on{border-color:#7c3aed;background:rgba(124,58,237,.2);color:#fff}
+.upload{width:100%;max-width:380px;padding:18px;border:2px dashed #3f3f46;border-radius:14px;cursor:pointer}
 </style>
 </head>
 <body>
-<header>
-<div class="logo"><div class="logo-icon">C</div><h1>CUTTAN</h1></div>
-<div id="header-status" style="font-size:11px;color:#71717a">Loading...</div>
-</header>
-
+<header><div class="logo"><div class="logo-icon">C</div><div>CUTTAN</div></div><div id="hs" style="font-size:11px;color:#71717a">Loading</div></header>
 <div class="hero" id="landing">
-<div>
-<div class="c">C</div>
-<h2>Purple Luxury Video LUT Studio</h2>
-<p>Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support.</p>
-<button class="btn" id="openEditorBtn">Open Editor</button>
-<div id="status">Loading v7-final-46-46...</div>
+<div><div class="c">C</div><h2 style="font-size:24px;margin-bottom:10px">Purple Luxury Video LUT Studio</h2><p style="color:#a1a1aa;max-width:360px;margin:0 auto 16px">Indian Video LUT Studio - Mobile FFmpeg editor</p><button class="btn" id="openBtn">Open Editor</button><div id="s">Loading v7...</div></div>
 </div>
-</div>
-
 <div id="editor">
-<div class="editor-header">
-<button class="btn" id="closeEditorBtn" style="padding:8px 14px;font-size:13px">← Back</button>
-<div style="font-weight:700">CUTTAN Editor</div>
-<div style="width:60px"></div>
-</div>
-<div class="editor-body">
-<label class="upload" id="uploadLabel">
-<div style="font-size:28px;margin-bottom:8px">📤</div>
-<div style="font-weight:600">Upload Video</div>
-<div style="font-size:12px;color:#71717a;margin-top:4px">MP4, MOV - Max 100MB</div>
-<input type="file" id="videoInput" accept="video/*">
-</label>
-<div class="video-wrap" id="videoWrap" style="display:none">
-<video id="video" playsinline controls></video>
-<canvas id="canvas" style="display:none"></canvas>
-</div>
+<div class="editor-head"><button class="btn" id="closeBtn" style="padding:7px 12px;font-size:12px">← Back</button><div style="font-weight:700">Editor</div><div style="width:50px"></div></div>
+<div class="body">
+<label class="upload" id="upLabel">📤 Upload Video<input type="file" id="vidIn" accept="video/*" style="display:none"><div style="font-size:12px;color:#71717a;margin-top:4px">MP4 Max 100MB</div></label>
+<div class="vwrap" id="vwrap" style="display:none"><video id="video" playsinline controls></video></div>
 <div class="filters" id="filters" style="display:none">
-<button class="filter-btn active" data-filter="none">Original</button>
-<button class="filter-btn" data-filter="purple">Purple Luxury</button>
-<button class="filter-btn" data-filter="warm">Warm</button>
-<button class="filter-btn" data-filter="cold">Cold</button>
-<button class="filter-btn" data-filter="bw">B&W</button>
-<button class="filter-btn" data-filter="vintage">Vintage</button>
+<button class="fbtn on" data-f="none">Original</button><button class="fbtn" data-f="purple">Purple Luxury</button><button class="fbtn" data-f="warm">Warm</button><button class="fbtn" data-f="cold">Cold</button><button class="fbtn" data-f="bw">B&W</button><button class="fbtn" data-f="vintage">Vintage</button>
 </div>
-<div class="tools" id="tools" style="display:none">
-<button class="btn" id="downloadBtn">Download</button>
-<button class="btn" id="resetBtn" style="background:#27272a">Reset</button>
-</
+<div style="display:none;gap:8px;width:100%;max-width:380px" id="tools"><button class="btn" id="downBtn" style="flex:1">Download Frame</button><button class="btn" id="resetBtn" style="flex:1;background:#27272a">Reset</button></div>
+</div>
+</div>
+<script>
+const BASE='/CUTTAN-Purple-Luxury-Source';
+const s=document.getElementById('s'),hs=document.getElementById('hs');
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register(`${BASE}/sw.js`,{scope:`${BASE}/`}).then(r=>{s.textContent='PWA Ready - '+r.scope+' - Offline ✓ v7 - App Open!';hs.textContent='PWA Ready ✓';}).catch(e=>{s.textContent='App Open! SW:'+e.message;});
+}
+const landing=document.getElementById('landing'),ed=document.getElementById('editor');
+document.getElementById('openBtn').onclick=()=>{ed.classList.add('on');landing.style.display='none';};
+document.getElementById('closeBtn').onclick=()=>{ed.classList.remove('on');landing.style.display='grid';document.getElementById('video').pause();};
+const vin=document.getElementById('vidIn'),video=document.getElementById('video'),vwrap=document.getElementById('vwrap'),filters=document.getElementById('filters'),tools=document.getElementById('tools'),upLabel=document.getElementById('upLabel');
+let cur='none';
+const getF=f=>{if(f==='purple')return'contrast(1.2) brightness(1.1) hue-rotate(270deg) saturate(1.5)';if(f==='warm')return'contrast(1.1) brightness(1.1) sepia(0.3) saturate(1.3)';if(f==='cold')return'contrast(1.1) hue-rotate(180deg) saturate(1.2)';if(f==='bw')return'grayscale(1) contrast(1.2)';if(f==='vintage')return'contrast(1.2) sepia(0.5) brightness(0.9)';return'none';};
+vin.onchange=e=>{const file=e.target.files[0];if(!file)return;if(file.size>100*1024*1024){alert('Too big!');return;}video.src=URL.createObjectURL(file);vwrap.style.display='block';filters.style.display='flex';tools.style.display='flex';upLabel.style.display='none';video.play();};
+document.querySelectorAll('.fbtn').forEach(b=>{b.onclick=()=>{document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));b.classList.add('on');cur=b.dataset.f;video.style.filter=getF(cur);};});
+document.getElementById('downBtn').onclick=()=>{if(!video.src){alert('Upload first!');return;}const c=document.createElement('canvas');c.width=video.videoWidth||400;c.height=video.videoHeight||720;const cx=c.getContext('2d');cx.filter=getF(cur);cx.drawImage(video,0,0,c.width,c.height);const a=document.createElement('a');a.download=`cuttan-${cur}-${Date.now()}.png`;a.href=c.toDataURL();a.click();};
+document.getElementById('resetBtn').onclick=()=>{video.src='';vwrap.style.display='none';filters.style.display='none';tools.style.display='none';upLabel.style.display='block';cur='none';video.style.filter='none';document.querySelectorAll('.fbtn').forEach(x=>x.classList.remove('on'));document.querySelector('[data-f="none"]').classList.add('on');};
+</script>
+</body>
+</html>
