@@ -38,5 +38,5 @@
   "handle_links": "preferred",
   "scope_extensions": [{"origin": "https://cuttan-purple-luxury-source.vercel.app"}],
   "note_taking": {"new": {"url": "/?note=new"}},
-  "widgets": [{"name": "CUTTAN Quick Edit", "description": "Quick LUT editor", "tag": "cuttan-quick", "template": "cuttan-template", "msAcTemplate": "https://cuttan-purple-luxury-source.vercel.app/widgets/template.json", "data": "https://cuttan-purple-luxury-source.vercel.app/widgets/data.json", "type": "application/json", "screenshots": [{"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "form_factor": "narrow", "label": "Widget"}], "icons": [{"src": "./icons/cuttan-192.png", "sizes": "1254x1254", "type": "image/png"}]}]
+  "widgets": [{"name": "CUTTAN Quick Edit", "description": "Quick LUT editor", "tag": "cuttan-quick-edit", "template": "cuttan-template", "msAcTemplate": "https://cuttan-purple-luxury-source.vercel.app/widgets/template.json", "data": "https://cuttan-purple-luxury-source.vercel.app/widgets/data.json", "type": "application/json", "screenshots": [{"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "form_factor": "narrow", "label": "Widget"}], "icons": [{"src": "./icons/cuttan-192.png", "sizes": "1254x1254", "type": "image/png"}]}]
 }
