@@ -1,52 +1,97 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#100817">
-<meta name="background-color" content="#100817">
-<title>CUTTAN - Purple Luxury Video LUT Studio</title>
-<meta name="description" content="CUTTAN Purple Luxury - Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support.">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" type="image/png" sizes="192x192" href="./icons/cuttan-192.png">
-<link rel="icon" type="image/png" sizes="512x512" href="./icons/cuttan-512.png">
-<link rel="apple-touch-icon" href="./icons/cuttan-192.png">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{margin:0;min-height:100dvh;display:grid;place-items:center;background:#100817;color:#f5efff;font:16px system-ui,sans-serif;text-align:center;padding:24px}
-.card{max-width:400px}
-.logo{width:90px;height:90px;border-radius:22px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-size:38px;font-weight:900;margin:0 auto 20px;box-shadow:0 20px 40px rgba(124,58,237,.3)}
-h1{margin:0 0 10px;font-size:28px;background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-p{opacity:.7;line-height:1.6;margin:0 0 22px}
-a.btn{display:inline-block;padding:14px 26px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:800;text-decoration:none}
-#status{margin-top:18px;font-size:11px;opacity:.6;word-break:break-all}
-</style>
-</head>
-<body>
-<div class="card">
-<div class="logo">C</div>
-<h1>CUTTAN Purple Luxury</h1>
-<p>Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support.</p>
-<a id="openBtn" class="btn" href="/CUTTAN-Purple-Luxury-Source/?source=pwa">Open Editor</a>
-<div id="status">Loading vFinal...</div>
-</div>
-<script>
-(function(){
-  var BASE='/CUTTAN-Purple-Luxury-Source';
-  var statusEl=document.getElementById('status');
-  statusEl.textContent='Ready - '+BASE+' - '+new Date().toLocaleTimeString();
-  if('serviceWorker' in navigator){
-    window.addEventListener('load',function(){
-      navigator.serviceWorker.register(BASE+'/sw.js',{scope:BASE+'/'})
-        .then(function(reg){statusEl.textContent+=' | SW OK | '+reg.scope;})
-        .catch(function(err){statusEl.textContent+=' | SW Fail: '+err.message; console.error(err);});
-    });
-  }
-  var params=new URLSearchParams(window.location.search);
-  if(params.has('p')){console.log('Protocol:',params.get('p'));}
-  if(params.has('shortcut')){console.log('Shortcut:',params.get('shortcut'));}
-  window.addEventListener('beforeinstallprompt',function(e){e.preventDefault(); console.log('Install ready');});
-})();
-</script>
-</body>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />  
+  <title>CUTTAN - Purple Luxury Video LUT Studio</title>  
+  <meta name="description" content="CUTTAN Purple Luxury - Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support." />  
+  <meta name="theme-color" content="#100817" />  
+  <meta name="background-color" content="#100817" />  
+  <meta name="apple-mobile-web-app-capable" content="yes" />  
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />  
+  <meta name="apple-mobile-web-app-title" content="CUTTAN" />    <!-- PWA Manifest - GitHub Pages relative path -->    <link rel="manifest" href="./manifest.webmanifest" />    <!-- Icons - PWABuilder 46/46 ku must -->    <link rel="icon" type="image/png" sizes="192x192" href="./icons/cuttan-192.png" />  
+  <link rel="icon" type="image/png" sizes="512x512" href="./icons/cuttan-512.png" />  
+  <link rel="apple-touch-icon" href="./icons/cuttan-192.png" />    <!-- Open Graph -->    <meta property="og:title" content="CUTTAN Purple Luxury" />  
+  <meta property="og:description" content="Indian Video LUT Studio for creators" />  
+  <meta property="og:image" content="./icons/cuttan-512.png" />    <style>  
+    * { margin: 0; padding: 0; box-sizing: border-box; }  
+    body {  
+      background: #100817;  
+      color: #fff;  
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;  
+      min-height: 100vh;  
+      display: flex;  
+      flex-direction: column;  
+      align-items: center;  
+      justify-content: center;  
+      text-align: center;  
+      padding: 20px;  
+    }  
+    .logo {  
+      width: 120px;  
+      height: 120px;  
+      border-radius: 24px;  
+      background: linear-gradient(135deg, #7c3aed, #ec4899);  
+      display: flex;  
+      align-items: center;  
+      justify-content: center;  
+      font-size: 48px;  
+      font-weight: bold;  
+      margin-bottom: 24px;  
+      box-shadow: 0 20px 40px rgba(124, 58, 237, 0.3);  
+    }  
+    h1 { font-size: 28px; margin-bottom: 12px; background: linear-gradient(135deg, #a78bfa, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }  
+    p { color: #a1a1aa; max-width: 400px; line-height: 1.6; margin-bottom: 24px; }  
+    .btn {  
+      background: linear-gradient(135deg, #7c3aed, #ec4899);  
+      color: white;  
+      border: none;  
+      padding: 14px 28px;  
+      border-radius: 12px;  
+      font-size: 16px;  
+      font-weight: 600;  
+      cursor: pointer;  
+      text-decoration: none;  
+      display: inline-block;  
+    }  
+    #status { margin-top: 20px; font-size: 12px; color: #71717a; }  
+  </style>  </head>  
+<body>  
+  <div class="logo">C</div>  
+  <h1>CUTTAN Purple Luxury</h1>  
+  <p>Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support.</p>  
+  <a href="./?source=pwa" class="btn">Open Editor</a>  
+  <div id="status">PWA Ready - v7 - Offline Support Enabled</div>    <script>  
+    // Service Worker Registration - GitHub Pages base path auto-detect  
+    const BASE = window.location.pathname.includes('/CUTTAN-Purple-Luxury-Source')   
+      ? '/CUTTAN-Purple-Luxury-Source'   
+      : '';  
+      
+    if ('serviceWorker' in navigator) {  
+      window.addEventListener('load', () => {  
+        navigator.serviceWorker.register(`${BASE}/sw.js`, { scope: `${BASE}/` })  
+          .then((reg) => {  
+            console.log('CUTTAN SW Registered:', reg.scope);  
+            document.getElementById('status').textContent = `PWA Ready - ${reg.scope} - Offline ✓`;  
+          })  
+          .catch((err) => {  
+            console.error('CUTTAN SW Failed:', err);  
+            document.getElementById('status').textContent = 'SW Failed: ' + err.message;  
+          });  
+      });  
+    }  
+  
+    // PWA Install Prompt  
+    let deferredPrompt;  
+    window.addEventListener('beforeinstallprompt', (e) => {  
+      e.preventDefault();  
+      deferredPrompt = e;  
+      console.log('CUTTAN Install prompt ready');  
+    });  
+  
+    // Handle protocol handler ?p=  
+    const params = new URLSearchParams(window.location.search);  
+    if (params.has('p')) {  
+      console.log('CUTTAN Protocol:', params.get('p'));  
+    }  
+  </script>  </body>  
 </html>
