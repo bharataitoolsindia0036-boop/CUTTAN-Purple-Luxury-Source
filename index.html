@@ -1,75 +1,85 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="theme-color" content="#100817">
+<meta name="description" content="CUTTAN Purple Luxury - Indian Video LUT Studio">
 <title>CUTTAN - Purple Luxury Video LUT Studio</title>
-<meta name="description" content="CUTTAN Purple Luxury - Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support." />
-<meta name="theme-color" content="#100817" />
-<link rel="manifest" href="./manifest.webmanifest" />
-<link rel="icon" type="image/png" sizes="192x192" href="./icons/cuttan-192.png" />
-<link rel="icon" type="image/png" sizes="512x512" href="./icons/cuttan-512.png" />
-<link rel="apple-touch-icon" href="./icons/cuttan-192.png" />
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/cuttan-192.png">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:#100817;color:#fff;font-family:system-ui,sans-serif;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
-.logo{width:120px;height:120px;border-radius:24px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:bold;margin-bottom:24px;box-shadow:0 20px 40px rgba(124,58,237,.3)}
-h1{font-size:28px;margin-bottom:12px;background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-p{color:#a1a1aa;max-width:400px;line-height:1.6;margin-bottom:24px}
-.btn{background:linear-gradient(135deg,#7c3aed,#ec4899);color:white;border:none;padding:14px 28px;border-radius:12px;font-size:16px;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
-#status{margin-top:20px;font-size:12px;color:#71717a}
-#editor{display:none;position:fixed;inset:0;background:#100817;z-index:10;padding:20px;overflow:auto}
-#editor.show{display:flex;flex-direction:column;align-items:center;justify-content:center}
-.video-box{width:100%;max-width:360px;height:200px;background:#1a102c;border-radius:16px;display:grid;place-items:center;margin:20px 0;border:2px dashed #7c3aed}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100vh;background:#100817;color:#fff;font-family:system-ui,sans-serif}
+header{padding:16px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a1a4a;background:rgba(16,8,23,.9);backdrop-filter:blur(10px);position:sticky;top:0;z-index:10}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-icon{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-weight:900;font-size:22px}
+h1{font-size:18px;background:linear-gradient(135deg,#a78bfa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero{min-height:calc(100vh - 70px);display:grid;place-items:center;padding:20px;text-align:center}
+.c{width:90px;height:90px;border-radius:22px;background:linear-gradient(135deg,#7c3aed,#ec4899);display:grid;place-items:center;font-size:40px;font-weight:900;margin:0 auto 18px;box-shadow:0 10px 30px rgba(124,58,237,.4)}
+.hero h2{font-size:28px;margin-bottom:12px}
+.hero p{color:#a1a1aa;max-width:380px;line-height:1.6;margin:0 auto 20px}
+.btn{border:0;padding:14px 28px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#ec4899);color:#fff;font-weight:700;font-size:16px;cursor:pointer;box-shadow:0 6px 20px rgba(124,58,237,.3)}
+.btn:active{transform:scale(.98)}
+#status{margin-top:18px;font-size:11px;color:#71717a;word-break:break-all}
+#editor{display:none;position:fixed;inset:0;background:#100817;z-index:100;flex-direction:column}
+#editor.active{display:flex}
+.editor-header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2a1a4a}
+.editor-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;gap:16px;overflow:auto}
+.video-wrap{width:100%;max-width:400px;aspect-ratio:9/16;background:#000;border-radius:16px;overflow:hidden;position:relative;border:1px solid #2a1a4a}
+video,canvas{width:100%;height:100%;object-fit:cover}
+input[type=file]{display:none}
+.upload{width:100%;max-width:400px;padding:20px;border:2px dashed #3f3f46;border-radius:16px;text-align:center;cursor:pointer}
+.upload:hover{border-color:#7c3aed}
+.filters{display:flex;gap:8px;overflow:auto;width:100%;max-width:400px;padding:4px}
+.filter-btn{flex:0 0 auto;padding:8px 14px;border-radius:20px;border:1px solid #3f3f46;background:#18181b;color:#a1a1aa;font-size:13px;cursor:pointer}
+.filter-btn.active{border-color:#7c3aed;background:rgba(124,58,237,.2);color:#fff}
+.tools{display:flex;gap:10px;width:100%;max-width:400px}
+.tools .btn{flex:1;padding:12px;font-size:14px}
 </style>
 </head>
 <body>
-<div id="landing">
-<div class="logo">C</div>
-<h1>CUTTAN Purple Luxury</h1>
+<header>
+<div class="logo"><div class="logo-icon">C</div><h1>CUTTAN</h1></div>
+<div id="header-status" style="font-size:11px;color:#71717a">Loading...</div>
+</header>
+
+<div class="hero" id="landing">
+<div>
+<div class="c">C</div>
+<h2>Purple Luxury Video LUT Studio</h2>
 <p>Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support.</p>
-<a href="javascript:void(0)" onclick="openEditor()" class="btn">Open Editor</a>
-<div id="status">PWA Ready - vFinal - Offline ✓</div>
+<button class="btn" id="openEditorBtn">Open Editor</button>
+<div id="status">Loading v7-final-46-46...</div>
+</div>
 </div>
 
 <div id="editor">
-<div class="logo" style="width:60px;height:60px;font-size:24px">C</div>
-<h1>Editor Ready</h1>
-<div class="video-box">📹 Video Preview Area<br><small style="opacity:.5">Upload MP4 to edit with LUTs</small></div>
-<p style="color:#a78bfa">FFmpeg + LUTs + Trim + Filters — Offline Working!</p>
-<button class="btn" onclick="closeEditor()">← Back to Home</button>
-<div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
-<button class="btn" style="background:#27272a">Upload Video</button>
-<button class="btn" style="background:#27272a">Apply LUT</button>
-<button class="btn" style="background:#27272a">Export</button>
+<div class="editor-header">
+<button class="btn" id="closeEditorBtn" style="padding:8px 14px;font-size:13px">← Back</button>
+<div style="font-weight:700">CUTTAN Editor</div>
+<div style="width:60px"></div>
 </div>
+<div class="editor-body">
+<label class="upload" id="uploadLabel">
+<div style="font-size:28px;margin-bottom:8px">📤</div>
+<div style="font-weight:600">Upload Video</div>
+<div style="font-size:12px;color:#71717a;margin-top:4px">MP4, MOV - Max 100MB</div>
+<input type="file" id="videoInput" accept="video/*">
+</label>
+<div class="video-wrap" id="videoWrap" style="display:none">
+<video id="video" playsinline controls></video>
+<canvas id="canvas" style="display:none"></canvas>
 </div>
-
-<script>
-const BASE = window.location.pathname.includes('/CUTTAN-Purple-Luxury-Source') ? '/CUTTAN-Purple-Luxury-Source' : '';
-function openEditor(){
-  document.getElementById('landing').style.display='none';
-  document.getElementById('editor').classList.add('show');
-  history.pushState({},'','?source=pwa&editor=open');
-  console.log('CUTTAN Editor Opened');
-}
-function closeEditor(){
-  document.getElementById('editor').classList.remove('show');
-  document.getElementById('landing').style.display='flex';
-  document.getElementById('landing').style.flexDirection='column';
-  history.pushState({},'','./');
-}
-
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register(`${BASE}/sw.js`,{scope:`${BASE}/`})
-      .then(reg=>{document.getElementById('status').textContent=`PWA Ready - ${reg.scope} - Offline ✓`;})
-      .catch(err=>{document.getElementById('status').textContent='SW Fail: '+err.message;});
-  });
-}
-
-const params=new URLSearchParams(location.search);
-if(params.has('editor') || params.has('source')){ openEditor(); }
-</script>
-</body>
-</html>
+<div class="filters" id="filters" style="display:none">
+<button class="filter-btn active" data-filter="none">Original</button>
+<button class="filter-btn" data-filter="purple">Purple Luxury</button>
+<button class="filter-btn" data-filter="warm">Warm</button>
+<button class="filter-btn" data-filter="cold">Cold</button>
+<button class="filter-btn" data-filter="bw">B&W</button>
+<button class="filter-btn" data-filter="vintage">Vintage</button>
+</div>
+<div class="tools" id="tools" style="display:none">
+<button class="btn" id="downloadBtn">Download</button>
+<button class="btn" id="resetBtn" style="background:#27272a">Reset</button>
+</
