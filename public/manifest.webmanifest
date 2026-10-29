@@ -1,10 +1,10 @@
 {
-  "id": "/?source=pwa",
+  "id": "/CUTTAN-Purple-Luxury-Source/?source=pwa",
   "name": "CUTTAN Video LUT Editor",
   "short_name": "CUTTAN",
   "description": "CUTTAN Purple Luxury - Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support for Indus Appstore.",
-  "start_url": "/?source=pwa",
-  "scope": "/",
+  "start_url": "/CUTTAN-Purple-Luxury-Source/?source=pwa",
+  "scope": "/CUTTAN-Purple-Luxury-Source/",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "browser"],
   "orientation": "portrait",
@@ -15,28 +15,28 @@
   "categories": ["photo", "video", "entertainment", "utilities"],
   "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-e424ac03e03c",
   "prefer_related_applications": false,
-  "related_applications": [{"platform": "webapp", "url": "https://cuttan-purple-luxury-source.vercel.app/manifest.webmanifest"}],
+  "related_applications": [{"platform": "webapp", "url": "https://bharatatoolsindia0036-boop.github.io/CUTTAN-Purple-Luxury-Source/manifest.webmanifest"}],
   "icons": [
-    {"src": "/icons/cuttan-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
-    {"src": "/icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
-    {"src": "/icons/cuttan-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
-    {"src": "/icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+    {"src": "./icons/cuttan-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "./icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "./icons/cuttan-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable"},
+    {"src": "./icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
   ],
   "screenshots": [
-    {"src": "/icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "form_factor": "narrow", "label": "Portrait"},
-    {"src": "/icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "form_factor": "wide", "label": "Wide"}
+    {"src": "./icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "form_factor": "narrow", "label": "Portrait"},
+    {"src": "./icons/cuttan-512.png", "sizes": "512x512", "type": "image/png", "form_factor": "wide", "label": "Wide"}
   ],
   "shortcuts": [
-    {"name": "Open Editor", "short_name": "Editor", "url": "/?shortcut=editor", "icons": [{"src": "/icons/cuttan-192.png", "sizes": "192x192", "type": "image/png"}]},
-    {"name": "My Projects", "short_name": "Projects", "url": "/?shortcut=projects", "icons": [{"src": "/icons/cuttan-192.png", "sizes": "192x192", "type": "image/png"}]}
+    {"name": "Open Editor", "short_name": "Editor", "url": "/CUTTAN-Purple-Luxury-Source/?shortcut=editor", "icons": [{"src": "./icons/cuttan-192.png", "sizes": "192x192", "type": "image/png"}]},
+    {"name": "My Projects", "short_name": "Projects", "url": "/CUTTAN-Purple-Luxury-Source/?shortcut=projects", "icons": [{"src": "./icons/cuttan-192.png", "sizes": "192x192", "type": "image/png"}]}
   ],
-  "share_target": {"action": "/", "method": "GET", "params": {"title": "title", "text": "text", "url": "url"}},
-  "file_handlers": [{"action": "/", "accept": {"video/*": [".mp4"]}}],
-  "protocol_handlers": [{"protocol": "web+cuttan", "url": "/?p=%s"}],
+  "share_target": {"action": "/CUTTAN-Purple-Luxury-Source/", "method": "GET", "params": {"title": "title", "text": "text", "url": "url"}},
+  "file_handlers": [{"action": "/CUTTAN-Purple-Luxury-Source/", "accept": {"video/*": [".mp4", ".mov"]}}],
+  "protocol_handlers": [{"protocol": "web+cuttan", "url": "/CUTTAN-Purple-Luxury-Source/?p=%s"}],
   "launch_handler": {"client_mode": ["navigate-existing", "auto"]},
   "edge_side_panel": {"preferred_width": 400},
   "handle_links": "preferred",
-  "scope_extensions": [{"origin": "https://cuttan-purple-luxury-source.vercel.app"}],
-  "note_taking": {"new": {"url": "/?note=new"}},
-  "widgets": [{"name": "CUTTAN Quick Edit", "description": "Quick LUT editor", "tag": "cuttan-quick", "template": "cuttan-template", "msAcTemplate": "https://cuttan-purple-luxury-source.vercel.app/widgets/template.json", "data": "https://cuttan-purple-luxury-source.vercel.app/widgets/data.json", "type": "application/json", "screenshots": [{"src": "/icons/cuttan-512.png", "sizes": "512x512", "form_factor": "narrow", "label": "Widget"}], "icons": [{"src": "/icons/cuttan-192.png", "sizes": "192x192", "type": "image/png"}]}]
+  "scope_extensions": [{"origin": "https://bharatatoolsindia0036-boop.github.io"}],
+  "note_taking": {"new": {"url": "/CUTTAN-Purple-Luxury-Source/?note=new"}},
+  "widgets": [{"name": "CUTTAN Quick Edit", "description": "Quick LUT editor", "tag": "cuttan-quick", "template": "cuttan-template", "msAcTemplate": "https://bharatatoolsindia0036-boop.github.io/CUTTAN-Purple-Luxury-Source/widgets/template.json", "data": "https://bharatatoolsindia0036-boop.github.io/CUTTAN-Purple-Luxury-Source/widgets/data.json", "type": "application/json", "screenshots": [{"src": "./icons/cuttan-512.png", "sizes": "512x512", "form_factor": "narrow", "label": "Widget"}], "icons": [{"src": "./icons/cuttan-192.png", "sizes": "192x192", "type": "image/png"}]}]
 }
