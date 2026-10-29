@@ -1,7 +1,8 @@
-const CACHE_NAME = "cuttan-v7";
+const CACHE_NAME = "cuttan-v7-final-46-46";
 const BASE = "/CUTTAN-Purple-Luxury-Source";
 const APP_SHELL = [
   `${BASE}/`,
+  `${BASE}/index.html`,
   `${BASE}/?source=pwa`,
   `${BASE}/manifest.webmanifest`,
   `${BASE}/icons/cuttan-192.png`,
@@ -10,7 +11,9 @@ const APP_SHELL = [
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((c) => c.addAll(APP_SHELL))
+    caches.open(CACHE_NAME).then((c) =>
+      c.addAll(APP_SHELL).catch(() => c.add(`${BASE}/`))
+    )
   );
   self.skipWaiting();
 });
@@ -26,18 +29,19 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
+  if (e.request.method !== "GET") return;
   e.respondWith(
     caches.match(e.request).then((cached) => {
       if (cached) return cached;
       return fetch(e.request)
         .then((res) => {
-          if (res.ok) {
-            const cl = res.clone();
-            caches.open(CACHE_NAME).then((ca) => ca.put(e.request, cl));
+          if (res && res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
           }
           return res;
         })
-        .catch(() => caches.match(`${BASE}/`) || caches.match(`${BASE}/?source=pwa`));
+        .catch(() => caches.match(`${BASE}/`) || caches.match(`${BASE}/index.html`));
     })
   );
 });
@@ -45,11 +49,9 @@ self.addEventListener("fetch", (e) => {
 self.addEventListener("sync", (e) => {
   if (e.tag === "cuttan-sync") e.waitUntil(Promise.resolve());
 });
-
 self.addEventListener("periodicsync", (e) => {
   if (e.tag === "cuttan-periodic") e.waitUntil(Promise.resolve());
 });
-
 self.addEventListener("push", (e) => {
   const d = e.data ? e.data.json() : { title: "CUTTAN", body: "New LUT!" };
   e.waitUntil(
@@ -59,7 +61,6 @@ self.addEventListener("push", (e) => {
     })
   );
 });
-
 self.addEventListener("notificationclick", (e) => {
   e.notification.close();
   e.waitUntil(clients.openWindow(`${BASE}/`));
