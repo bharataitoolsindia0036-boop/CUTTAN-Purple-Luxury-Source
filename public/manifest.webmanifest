@@ -27,16 +27,16 @@
     {"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png", "form_factor": "wide", "label": "CUTTAN Wide"}
   ],
   "shortcuts": [
-    {"name": "Open Editor", "short_name": "Editor", "description": "Open editor", "url": "/?shortcut=editor", "icons": [{"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png"}]},
-    {"name": "My Projects", "short_name": "Projects", "description": "View projects", "url": "/?shortcut=projects", "icons": [{"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png"}]}
+    {"name": "Open Editor", "short_name": "Editor", "url": "/?shortcut=editor", "icons": [{"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png"}]},
+    {"name": "My Projects", "short_name": "Projects", "url": "/?shortcut=projects", "icons": [{"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "type": "image/png"}]}
   ],
   "share_target": {"action": "/", "method": "GET", "params": {"title": "title", "text": "text", "url": "url"}},
-  "file_handlers": [{"action": "/", "accept": {"video/*": [".mp4", ".mov"], "image/*": [".png", ".jpg"]}}],
+  "file_handlers": [{"action": "/", "accept": {"video/*": [".mp4", ".mov"]}}],
   "protocol_handlers": [{"protocol": "web+cuttan", "url": "/?p=%s"}],
   "launch_handler": {"client_mode": ["navigate-existing", "auto"]},
   "edge_side_panel": {"preferred_width": 400},
   "handle_links": "preferred",
   "scope_extensions": [{"origin": "https://cuttan-purple-luxury-source.vercel.app"}],
   "note_taking": {"new": {"url": "/?note=new"}},
-  "widgets": [{"name": "CUTTAN Quick Edit", "description": "Quick LUT editor widget", "tag": "cuttan-quick-edit", "template": "cuttan-template", "msAcTemplate": "https://cuttan-purple-luxury-source.vercel.app/widgets/template.json", "data": "https://cuttan-purple-luxury-source.vercel.app/widgets/data.json", "type": "application/json", "screenshots": [{"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "form_factor": "narrow", "label": "Widget"}], "icons": [{"src": "./icons/cuttan-192.png", "sizes": "1254x1254", "type": "image/png"}]}]
+  "widgets": [{"name": "CUTTAN Quick Edit", "description": "Quick LUT editor", "tag": "cuttan-quick", "template": "cuttan-template", "msAcTemplate": "https://cuttan-purple-luxury-source.vercel.app/widgets/template.json", "data": "https://cuttan-purple-luxury-source.vercel.app/widgets/data.json", "type": "application/json", "screenshots": [{"src": "./icons/cuttan-512.png", "sizes": "1254x1254", "form_factor": "narrow", "label": "Widget"}], "icons": [{"src": "./icons/cuttan-192.png", "sizes": "1254x1254", "type": "image/png"}]}]
 }
