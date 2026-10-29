@@ -15,10 +15,11 @@
   "categories": ["photo", "video", "entertainment", "utilities"],
   "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-e424ac03e03c",
   "prefer_related_applications": false,
+  "related_applications": [],
   "icons": [
     {
       "src": "./icons/cuttan-192.png",
-      "sizes": "192x192",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
@@ -30,7 +31,7 @@
     },
     {
       "src": "./icons/cuttan-192.png",
-      "sizes": "192x192",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
@@ -47,14 +48,14 @@
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
-      "label": "CUTTAN LUT Studio - Portrait"
+      "label": "CUTTAN LUT Studio Portrait"
     },
     {
       "src": "./icons/cuttan-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "wide",
-      "label": "CUTTAN LUT Studio - Wide"
+      "label": "CUTTAN LUT Studio Wide"
     }
   ],
   "shortcuts": [
@@ -63,33 +64,43 @@
       "short_name": "Editor",
       "description": "Open CUTTAN video editor",
       "url": "/?shortcut=editor",
-      "icons": [{ "src": "./icons/cuttan-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "./icons/cuttan-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
     },
     {
       "name": "My Projects",
       "short_name": "Projects",
-      "description": "View your projects",
+      "description": "View projects",
       "url": "/?shortcut=projects",
-      "icons": [{ "src": "./icons/cuttan-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "./icons/cuttan-512.png",
+          "sizes": "512x512",
+          "type": "image/png"
+        }
+      ]
     }
   ],
   "share_target": {
     "action": "/?share=true",
-    "method": "POST",
-    "enctype": "multipart/form-data",
+    "method": "GET",
     "params": {
       "title": "title",
       "text": "text",
-      "url": "url",
-      "files": [{ "name": "video", "accept": ["video/*", "image/*"] }]
+      "url": "url"
     }
   },
   "file_handlers": [
     {
       "action": "/?file=open",
       "accept": {
-        "video/*": [".mp4", ".mov", ".avi"],
-        "image/*": [".png", ".jpg", ".jpeg"]
+        "video/*": [".mp4", ".mov"],
+        "image/*": [".png", ".jpg"]
       }
     }
   ],
@@ -107,22 +118,36 @@
   },
   "handle_links": "preferred",
   "scope_extensions": [
-    { "origin": "*.cuttan.app" }
+    {
+      "origin": "https://cuttan-purple-luxury-source.vercel.app"
+    }
   ],
+  "note_taking": {
+    "new": {
+      "url": "/?note=new"
+    }
+  },
   "widgets": [
     {
       "name": "CUTTAN Quick Edit",
       "description": "Quick LUT editor widget",
-      "tag": "quick-edit",
-      "template": "quick-edit-template",
-      "msAcTemplate": "./widgets/template.json",
-      "data": "./widgets/data.json",
-      "type": "text",
+      "tag": "cuttan-quick",
+      "template": "template",
+      "msAcTemplate": "./icons/cuttan-512.png",
+      "data": "./icons/cuttan-512.png",
+      "type": "application/json",
       "screenshots": [
-        { "src": "./icons/cuttan-512.png", "sizes": "512x512", "label": "Widget" }
+        {
+          "src": "./icons/cuttan-512.png",
+          "sizes": "512x512",
+          "label": "Widget Preview"
+        }
       ],
       "icons": [
-        { "src": "./icons/cuttan-192.png", "sizes": "192x192" }
+        {
+          "src": "./icons/cuttan-512.png",
+          "sizes": "512x512"
+        }
       ]
     }
   ]
