@@ -1,15 +1,20 @@
 {
   "name": "CUTTAN Video LUT Editor",
   "short_name": "CUTTAN",
-  "id": "/",
+  "id": "/?source=pwa",
   "description": "CUTTAN Purple Luxury - Indian Video LUT Studio for creators. Mobile-first FFmpeg editor with LUTs, trim, filters, and offline support for Indus Appstore.",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "display": "standalone",
-  "orientation": "any",
+  "display_override": ["window-controls-overlay", "standalone", "browser"],
+  "orientation": "portrait",
   "background_color": "#100817",
   "theme_color": "#100817",
+  "lang": "en",
+  "dir": "ltr",
   "categories": ["photo", "video", "entertainment", "utilities"],
+  "iarc_rating_id": "e84b072d-71b3-4d3e-86ae-e424ac03e03c",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "./icons/cuttan-192.png",
@@ -41,8 +46,84 @@
       "src": "./icons/cuttan-512.png",
       "sizes": "512x512",
       "type": "image/png",
+      "form_factor": "narrow",
+      "label": "CUTTAN LUT Studio - Portrait"
+    },
+    {
+      "src": "./icons/cuttan-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "form_factor": "wide",
-      "label": "CUTTAN LUT Editor"
+      "label": "CUTTAN LUT Studio - Wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Open Editor",
+      "short_name": "Editor",
+      "description": "Open CUTTAN video editor",
+      "url": "/?shortcut=editor",
+      "icons": [{ "src": "./icons/cuttan-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "My Projects",
+      "short_name": "Projects",
+      "description": "View your projects",
+      "url": "/?shortcut=projects",
+      "icons": [{ "src": "./icons/cuttan-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "share_target": {
+    "action": "/?share=true",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "title": "title",
+      "text": "text",
+      "url": "url",
+      "files": [{ "name": "video", "accept": ["video/*", "image/*"] }]
+    }
+  },
+  "file_handlers": [
+    {
+      "action": "/?file=open",
+      "accept": {
+        "video/*": [".mp4", ".mov", ".avi"],
+        "image/*": [".png", ".jpg", ".jpeg"]
+      }
+    }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "web+cuttan",
+      "url": "/?protocol=%s"
+    }
+  ],
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "handle_links": "preferred",
+  "scope_extensions": [
+    { "origin": "*.cuttan.app" }
+  ],
+  "widgets": [
+    {
+      "name": "CUTTAN Quick Edit",
+      "description": "Quick LUT editor widget",
+      "tag": "quick-edit",
+      "template": "quick-edit-template",
+      "msAcTemplate": "./widgets/template.json",
+      "data": "./widgets/data.json",
+      "type": "text",
+      "screenshots": [
+        { "src": "./icons/cuttan-512.png", "sizes": "512x512", "label": "Widget" }
+      ],
+      "icons": [
+        { "src": "./icons/cuttan-192.png", "sizes": "192x192" }
+      ]
     }
   ]
 }
